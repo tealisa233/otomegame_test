@@ -1,0 +1,2247 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>命定心動方程式｜乙女遊戲男主匹配推薦系統</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --pink-light: #ffe4ef;
+      --pink-main: #ff8fb1;
+      --pink-deep: #e85d88;
+      --lavender-light: #efe6ff;
+      --lavender-main: #b892ff;
+      --lavender-deep: #7c5dfa;
+      --blue-light: #e0f2fe;
+      --blue-main: #7cc4fa;
+      --blue-deep: #3b82f6;
+      --text-dark: #3b2d4a;
+      --text-muted: #6e5d80;
+      --card-bg: rgba(255, 255, 255, 0.84);
+      --card-border: rgba(255, 255, 255, 0.92);
+      --shadow-soft: 0 18px 45px rgba(164, 122, 198, 0.16);
+      --shadow-hover: 0 12px 28px rgba(232, 93, 136, 0.22);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Microsoft JhengHei", sans-serif;
+      color: var(--text-dark);
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ffe6f0 0%, #f1e6ff 48%, #dff1ff 100%);
+      background-attachment: fixed;
+      overflow-x: hidden;
+      line-height: 1.65;
+      position: relative;
+    }
+
+    /* 夢幻光暈與漂浮愛心星星背景 */
+    .bg-decor {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(70px);
+      opacity: 0.55;
+      animation: floatOrb 16s ease-in-out infinite alternate;
+    }
+
+    .orb-1 {
+      width: 360px;
+      height: 360px;
+      background: #ffb6d2;
+      top: -80px;
+      left: -60px;
+    }
+
+    .orb-2 {
+      width: 420px;
+      height: 420px;
+      background: #d3b8ff;
+      bottom: -100px;
+      right: -80px;
+      animation-delay: -5s;
+    }
+
+    .orb-3 {
+      width: 300px;
+      height: 300px;
+      background: #bae1ff;
+      top: 42%;
+      left: 58%;
+      animation-delay: -9s;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(35px, -30px) scale(1.08); }
+    }
+
+    .sparkle {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.85);
+      text-shadow: 0 0 10px rgba(255, 143, 177, 0.5);
+      animation: twinkle 4s ease-in-out infinite;
+      user-select: none;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.25; transform: scale(0.85) rotate(0deg); }
+      50% { opacity: 0.95; transform: scale(1.15) rotate(15deg); }
+    }
+
+    /* 主容器 */
+    .app-wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 2px solid var(--card-border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-soft);
+      padding: 36px 32px;
+      transition: transform 0.35s ease, opacity 0.35s ease;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .fade-in {
+      animation: fadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 首頁設計 */
+    .hero-section {
+      text-align: center;
+      padding: 44px 32px;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255, 143, 177, 0.2), rgba(184, 146, 255, 0.22), rgba(124, 196, 250, 0.22));
+      border: 1px solid rgba(255, 143, 177, 0.45);
+      color: var(--pink-deep);
+      font-size: 0.86rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-bottom: 18px;
+    }
+
+    .hero-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.9rem, 4.5vw, 2.75rem);
+      font-weight: 900;
+      background: linear-gradient(120deg, #d64576 0%, #7c5dfa 52%, #2b7de9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.3;
+      margin-bottom: 14px;
+    }
+
+    .hero-subtitle {
+      font-size: 1.06rem;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin: 0 auto 24px;
+    }
+
+    .hero-quote {
+      background: linear-gradient(135deg, rgba(255, 228, 239, 0.65), rgba(239, 230, 255, 0.65));
+      border-left: 4px solid var(--pink-main);
+      border-radius: var(--radius-md);
+      padding: 16px 22px;
+      max-width: 640px;
+      margin: 0 auto 28px;
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #54386e;
+    }
+
+    .roster-preview {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      max-width: 680px;
+      margin: 0 auto 32px;
+      text-align: left;
+    }
+
+    .roster-box {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(184, 146, 255, 0.35);
+      border-radius: var(--radius-lg);
+      padding: 14px 18px;
+    }
+
+    .roster-box h3 {
+      font-size: 0.9rem;
+      color: var(--lavender-deep);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .char-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .char-tag {
+      font-size: 0.84rem;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #fff5f9, #f4eeff);
+      border: 1px solid rgba(255, 143, 177, 0.35);
+      color: var(--text-dark);
+      font-weight: 500;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 15px 38px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ff7aa8 0%, #9b72ff 55%, #5aa9ff 100%);
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      box-shadow: 0 10px 26px rgba(155, 114, 255, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 14px 32px rgba(232, 93, 136, 0.42);
+    }
+
+    .btn-primary:active:not(:disabled) {
+      transform: translateY(0) scale(0.99);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1.5px solid rgba(184, 146, 255, 0.5);
+      color: var(--text-dark);
+      font-size: 0.96rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.22s ease;
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: #fff;
+      border-color: var(--pink-main);
+      color: var(--pink-deep);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* 測驗進行區 */
+    .quiz-header {
+      margin-bottom: 22px;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .dimension-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ffe4ef, #efe6ff);
+      color: #6b3fa0;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .step-counter {
+      font-weight: 700;
+      font-size: 0.96rem;
+      color: var(--pink-deep);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background: rgba(220, 208, 240, 0.55);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff8fb1, #b892ff, #7cc4fa);
+      border-radius: 999px;
+      transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* 題號快速跳轉列（支援返回修改任意已作答題目） */
+    .step-dots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 14px;
+    }
+
+    .step-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(184, 146, 255, 0.45);
+      background: rgba(255, 255, 255, 0.65);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step-dot.answered {
+      background: rgba(255, 228, 239, 0.9);
+      border-color: var(--pink-main);
+      color: var(--pink-deep);
+    }
+
+    .step-dot.active {
+      background: linear-gradient(135deg, #ff7aa8, #9b72ff);
+      border-color: transparent;
+      color: #fff;
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(155, 114, 255, 0.35);
+    }
+
+    .step-dot:disabled {
+      opacity: 0.38;
+      cursor: not-allowed;
+    }
+
+    .question-type-hint {
+      font-size: 0.84rem;
+      color: var(--lavender-deep);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .question-text {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.22rem, 2.8vw, 1.5rem);
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 22px;
+      line-height: 1.5;
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      margin-bottom: 28px;
+    }
+
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      padding: 16px 20px;
+      border-radius: var(--radius-lg);
+      border: 2px solid rgba(212, 194, 242, 0.55);
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--text-dark);
+      font-size: 0.98rem;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .option-btn:hover {
+      background: #fff;
+      border-color: var(--pink-main);
+      transform: translateX(5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .option-btn.selected {
+      background: linear-gradient(135deg, rgba(255, 232, 242, 0.95), rgba(238, 229, 255, 0.95));
+      border-color: var(--pink-deep);
+      box-shadow: 0 8px 22px rgba(232, 93, 136, 0.2);
+    }
+
+    .option-marker {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid rgba(184, 146, 255, 0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--lavender-deep);
+      background: #fff;
+      margin-top: 1px;
+      transition: all 0.2s ease;
+    }
+
+    .option-btn.selected .option-marker {
+      background: linear-gradient(135deg, #ff7aa8, #9b72ff);
+      border-color: transparent;
+      color: #fff;
+    }
+
+    .option-content {
+      flex: 1;
+    }
+
+    .option-neutral-tag {
+      display: inline-block;
+      font-size: 0.74rem;
+      padding: 1px 8px;
+      border-radius: 999px;
+      background: rgba(124, 196, 250, 0.22);
+      color: #2563eb;
+      margin-left: 6px;
+      vertical-align: middle;
+      font-weight: 600;
+    }
+
+    .quiz-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(184, 146, 255, 0.35);
+    }
+
+    /* 計算過場 */
+    .calculating-box {
+      text-align: center;
+      padding: 60px 24px;
+    }
+
+    .heart-loader {
+      font-size: 3.2rem;
+      display: inline-block;
+      animation: heartbeat 1.1s ease-in-out infinite;
+      margin-bottom: 16px;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      25% { transform: scale(1.22); }
+      50% { transform: scale(0.96); }
+      75% { transform: scale(1.15); }
+    }
+
+    /* 結果頁面 */
+    .result-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .result-header h2 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.65rem, 3.8vw, 2.25rem);
+      background: linear-gradient(120deg, #d64576, #7c5dfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+    }
+
+    /* 第一名：命定男主角卡片 */
+    .top1-card {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(255, 240, 248, 0.92));
+      border: 2.5px solid rgba(255, 143, 177, 0.7);
+      border-radius: var(--radius-xl);
+      padding: 30px;
+      box-shadow: 0 20px 50px rgba(214, 69, 118, 0.16);
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .crown-ribbon {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ff7aa8, #9b72ff);
+      color: #fff;
+      font-size: 0.86rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+      box-shadow: 0 6px 16px rgba(232, 93, 136, 0.28);
+    }
+
+    .top1-hero {
+      display: grid;
+      grid-template-columns: 230px 1fr;
+      gap: 28px;
+      align-items: center;
+      margin-bottom: 26px;
+    }
+
+    .portrait-frame {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+      border: 3px solid #fff;
+      box-shadow: 0 12px 30px rgba(92, 62, 132, 0.2);
+      background: linear-gradient(135deg, #ffe4ef, #e0f2fe);
+    }
+
+    .portrait-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .portrait-fallback {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .portrait-fallback .char-initial {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 3.4rem;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 8px;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+    }
+
+    .portrait-fallback .char-sub {
+      font-size: 0.85rem;
+      opacity: 0.92;
+      font-weight: 600;
+    }
+
+    .top1-identity {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .game-tag {
+      display: inline-block;
+      width: fit-content;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      background: rgba(124, 93, 250, 0.12);
+      color: var(--lavender-deep);
+    }
+
+    .top1-name-row {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .top1-name {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(2rem, 4.5vw, 2.8rem);
+      font-weight: 900;
+      color: var(--text-dark);
+      line-height: 1.15;
+    }
+
+    .match-score-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #fff0f6, #f3e8ff);
+      border: 1.5px solid var(--pink-main);
+      color: var(--pink-deep);
+      font-weight: 900;
+      font-size: 1.2rem;
+    }
+
+    .char-title-line {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .dimension-bars {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 18px;
+      margin-top: 8px;
+      background: rgba(255, 255, 255, 0.72);
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+    }
+
+    .dim-bar-item {
+      font-size: 0.82rem;
+    }
+
+    .dim-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--text-dark);
+    }
+
+    .dim-bar-track {
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(184, 146, 255, 0.22);
+      overflow: hidden;
+    }
+
+    .dim-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ff8fb1, #9b72ff);
+    }
+
+    /* 第一名四項詳細分析格 */
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .analysis-box {
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(226, 209, 249, 0.8);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+    }
+
+    .analysis-box h4 {
+      font-size: 0.98rem;
+      color: var(--pink-deep);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .analysis-box.friction h4 {
+      color: #7c5dfa;
+    }
+
+    .analysis-box p {
+      font-size: 0.93rem;
+      color: var(--text-dark);
+      line-height: 1.65;
+    }
+
+    /* 角色九大戀愛人格原作檔案折疊區 */
+    .profile-toggle-btn {
+      width: 100%;
+      padding: 12px 18px;
+      border-radius: var(--radius-md);
+      border: 1.5px dashed rgba(155, 114, 255, 0.55);
+      background: rgba(248, 243, 255, 0.85);
+      color: var(--lavender-deep);
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .profile-toggle-btn:hover {
+      background: #fff;
+      border-color: var(--pink-main);
+      color: var(--pink-deep);
+    }
+
+    .canon-profile-drawer {
+      margin-top: 16px;
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      border: 1px solid rgba(184, 146, 255, 0.4);
+    }
+
+    .canon-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .canon-item {
+      background: #faf7ff;
+      border-radius: 12px;
+      padding: 12px 14px;
+      border: 1px solid rgba(226, 209, 249, 0.7);
+    }
+
+    .canon-item strong {
+      display: block;
+      font-size: 0.82rem;
+      color: var(--lavender-deep);
+      margin-bottom: 4px;
+    }
+
+    .canon-item span {
+      font-size: 0.86rem;
+      color: var(--text-dark);
+      line-height: 1.5;
+    }
+
+    /* 第二、三名：潛在匹配 */
+    .runner-up-heading {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.35rem;
+      color: var(--text-dark);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .runner-ups-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .runner-card {
+      background: rgba(255, 255, 255, 0.88);
+      border: 2px solid rgba(184, 146, 255, 0.45);
+      border-radius: var(--radius-xl);
+      padding: 22px;
+      box-shadow: 0 12px 32px rgba(124, 93, 250, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .runner-top {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .runner-portrait {
+      width: 96px;
+      height: 124px;
+      flex-shrink: 0;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2.5px solid #fff;
+      box-shadow: 0 8px 18px rgba(92, 62, 132, 0.16);
+    }
+
+    .runner-portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .runner-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .rank-tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #e0f2fe, #efe6ff);
+      color: #4f46e5;
+      margin-bottom: 4px;
+    }
+
+    .runner-name-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .runner-name {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.55rem;
+      font-weight: 900;
+      color: var(--text-dark);
+    }
+
+    .runner-pct {
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: var(--pink-deep);
+    }
+
+    .runner-detail-block {
+      background: rgba(250, 247, 255, 0.9);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 0.9rem;
+    }
+
+    .runner-detail-block strong {
+      display: block;
+      color: var(--lavender-deep);
+      font-size: 0.84rem;
+      margin-bottom: 3px;
+    }
+
+    .result-actions {
+      text-align: center;
+      padding-top: 8px;
+    }
+
+    /* 響應式斷點 */
+    @media (max-width: 780px) {
+      .glass-card {
+        padding: 26px 20px;
+      }
+
+      .roster-preview,
+      .analysis-grid,
+      .runner-ups-grid,
+      .canon-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .top1-hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .portrait-frame {
+        max-width: 220px;
+        margin: 0 auto;
+      }
+
+      .top1-identity {
+        align-items: center;
+      }
+
+      .dimension-bars {
+        grid-template-columns: 1fr;
+        width: 100%;
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .app-wrapper {
+        padding: 16px 12px 44px;
+      }
+
+      .hero-section {
+        padding: 30px 18px;
+      }
+
+      .option-btn {
+        padding: 14px 14px;
+        font-size: 0.94rem;
+      }
+
+      .quiz-footer {
+        flex-direction: column-reverse;
+      }
+
+      .quiz-footer button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 夢幻背景裝飾 -->
+  <div class="bg-decor" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <span class="sparkle" style="top: 9%; left: 12%; font-size: 1.4rem;">✦</span>
+    <span class="sparkle" style="top: 18%; right: 14%; font-size: 1.1rem; animation-delay: 1.2s;">♡</span>
+    <span class="sparkle" style="top: 56%; left: 7%; font-size: 1.2rem; animation-delay: 2.1s;">✧</span>
+    <span class="sparkle" style="bottom: 16%; right: 11%; font-size: 1.5rem; animation-delay: 0.7s;">✦</span>
+    <span class="sparkle" style="bottom: 24%; left: 22%; font-size: 1rem; animation-delay: 2.8s;">♡</span>
+  </div>
+
+  <main class="app-wrapper">
+    <!-- 1. 首頁 -->
+    <section id="intro-view" class="glass-card hero-section fade-in">
+      <div class="badge-pill">✦ 乙女遊戲男主匹配推薦系統 ✦</div>
+      <h1 class="hero-title">跨越次元的命定心動測驗</h1>
+      <p class="hero-subtitle">
+        本測驗不僅判斷你「欣賞哪種類型的他」，更以雙向適配、情感需求與關係界線為核心，深入分析你的戀愛模式與相處節奏。
+      </p>
+      <div class="hero-quote">
+        「如果你走進未名市與臨空市的世界，誰最有可能成為與你靈魂契合的命定對象？」
+      </div>
+
+      <div class="roster-preview">
+        <div class="roster-box">
+          <h3>♡ 《未定事件簿》收錄角色</h3>
+          <div class="char-tags">
+            <span class="char-tag">夏彥</span>
+            <span class="char-tag">左然</span>
+            <span class="char-tag">莫弈</span>
+            <span class="char-tag">陸景和</span>
+          </div>
+        </div>
+        <div class="roster-box">
+          <h3>✦ 《戀與深空》收錄角色</h3>
+          <div class="char-tags">
+            <span class="char-tag">沈星回</span>
+            <span class="char-tag">黎深</span>
+            <span class="char-tag">祁煜</span>
+            <span class="char-tag">秦徹</span>
+            <span class="char-tag">夏以晝</span>
+          </div>
+        </div>
+      </div>
+
+      <button id="start-btn" class="btn-primary" type="button">
+        <span>開啟命定測驗</span>
+        <span>→</span>
+      </button>
+    </section>
+
+    <!-- 2. 測驗作答頁 -->
+    <section id="quiz-view" class="glass-card hidden">
+      <div class="quiz-header">
+        <div class="progress-meta">
+          <span id="dimension-badge" class="dimension-badge">情感需求</span>
+          <span id="step-counter" class="step-counter">第 1／12 題</span>
+        </div>
+        <div class="progress-track">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+        <div id="step-dots" class="step-dots" aria-label="題目導覽"></div>
+      </div>
+
+      <div id="question-container" class="fade-in">
+        <div id="question-type" class="question-type-hint">沉浸式戀愛情境</div>
+        <h2 id="question-text" class="question-text">題目載入中...</h2>
+        <div id="options-list" class="options-list"></div>
+      </div>
+
+      <div class="quiz-footer">
+        <button id="prev-btn" class="btn-secondary" type="button">← 上一題修改</button>
+        <button id="next-btn" class="btn-primary" type="button" disabled>下一題 →</button>
+      </div>
+    </section>
+
+    <!-- 3. 計算過場畫面 -->
+    <section id="calc-view" class="glass-card calculating-box hidden">
+      <div class="heart-loader">💖</div>
+      <h2 style="font-family: 'Noto Serif TC', serif; margin-bottom: 10px;">正在解析你們的雙向心動頻率…</h2>
+      <p style="color: var(--text-muted);">比對八大戀愛維度、互動模式與關係界線中</p>
+    </section>
+
+    <!-- 4. 測驗結果頁面 -->
+    <section id="result-view" class="glass-card hidden">
+      <div class="result-header">
+        <div class="badge-pill">✦ 雙向戀愛適配分析報告 ✦</div>
+        <h2>你的命定男主角與潛在心動對象</h2>
+        <p style="color: var(--text-muted); font-size: 0.94rem;">依據你的情感需求、互動反應與關係界線綜合演算</p>
+      </div>
+
+      <!-- 第一名容器 -->
+      <div id="top1-container"></div>
+
+      <!-- 第二、三名容器 -->
+      <h3 class="runner-up-heading">✧ 潛在心動匹配對象（第 2、3 名）</h3>
+      <div id="runner-ups-container" class="runner-ups-grid"></div>
+
+      <div class="result-actions">
+        <button id="restart-btn" class="btn-primary" type="button">↺ 重新測驗（清除作答紀錄）</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // =========================================================================
+    // 1. 八大匹配面向定義
+    // =========================================================================
+    const DIMENSIONS = {
+      emotionalNeed: "情感需求",
+      intimacyCloseness: "親密關係模式",
+      communicationStyle: "互動與溝通",
+      proactiveness: "戀愛主動性",
+      protectiveness: "安全感與信任",
+      conflictStyle: "衝突處理",
+      lifeRhythm: "價值觀與生活節奏",
+      romanceVibe: "戀愛氛圍"
+    };
+
+    // =========================================================================
+    // 2. 九位男主角戀愛人格資料庫（依原作設定建立九大欄位，便於後續擴充與微調）
+    // =========================================================================
+    const CHARACTERS = [
+      {
+        id: "xia_yan",
+        name: "夏彥",
+        game: "《未定事件簿》",
+        title: "私人偵探・暖陽般的青梅竹馬",
+        image: "assets/xia_yan.png",
+        gradient: "linear-gradient(135deg, #f59e0b, #fb7185)",
+        profile: {
+          corePersonality: "陽光開朗、重情重義、觀察力敏銳，表面爽朗可靠，實則習慣把沉重與風險留給自己承擔。",
+          proactiveness: "行動上極為積極照顧，確認心意後真誠熾熱，但因太珍惜對方，在跨出最後一步與坦露脆弱上曾有克制。",
+          loveExpression: "透過無微不至的日常照顧、記得你所有喜好、關鍵時刻挺身而出，以及帶著少年感的溫柔笑意表達愛意。",
+          emotionalExpression: "習慣報喜不報憂，負面情緒與傷痛傾向獨自消化，不願讓你擔心；在信任的伴侶面前才偶爾流露脆弱與依賴。",
+          protectiveness: "極高。將你的安全與快樂視為第一順位，願意默默在背後掃清危險，同時尊重你的選擇與獨立。",
+          communication: "輕鬆自然、充滿默契與生活感，像摯友也像戀人，善於察言觀色並用幽默化解你的壓力。",
+          intimacyExpectation: "渴望長久安穩的陪伴、彼此成為最信任的後盾，以及共享平凡卻溫暖的每一天。",
+          contrastTrait: "日常像溫暖的大狗狗，執行任務或面對威脅時卻會展現冷靜果決、身手凌厲的偵探一面。",
+          conflictPattern: "容易因「過度為你著想而隱瞞風險或傷勢」引發爭執，需要雙方建立更坦誠的脆弱共享機制。"
+        },
+        scores: {
+          emotionalNeed: 8,
+          intimacyCloseness: 8,
+          communicationStyle: 7,
+          proactiveness: 8,
+          protectiveness: 8,
+          conflictStyle: 8,
+          lifeRhythm: 7,
+          romanceVibe: 8
+        },
+        boundaries: {
+          controlLevel: 2,
+          possessivenessLevel: 5,
+          selfSacrificeHide: 8
+        },
+        styleTags: ["warmCompanion", "hiddenBurden", "playfulAttentive"],
+        dynamicSummary: "日常像默契十足的摯友兼戀人，他會把你的大小事放在心尖上，在你需要時永遠第一時間出現。"
+      },
+      {
+        id: "zuo_ran",
+        name: "左然",
+        game: "《未定事件簿》",
+        title: "資深律師・克制守禮的成熟引路人",
+        image: "assets/zuo_ran.png",
+        gradient: "linear-gradient(135deg, #3b82f6, #6366f1)",
+        profile: {
+          corePersonality: "嚴謹自律、理性專業、責任感極強，內心溫柔細膩卻因不善言辭而顯得略微疏離高冷。",
+          proactiveness: "初期因自律與分寸感而顯得克制內斂，一旦認定關係便會以極其認真、穩重且全力以赴的態度主動規劃未來。",
+          loveExpression: "不擅長華麗情話，習慣透過實際行動、細節偏愛、為你遮風擋雨以及笨拙卻真誠的儀式感傳遞愛意。",
+          emotionalExpression: "情緒穩定內斂，很少失控，面對感情時容易耳根泛紅或略顯緊張，展現出反差的純情。",
+          protectiveness: "成熟且有分寸的守護型，會為你提供可靠建議與安全感，同時尊重你的專業與獨立人格。",
+          communication: "講求真誠、尊重與理性溝通，偶爾因過於認真而顯得一板一眼，但非常願意為伴侶學習浪漫。",
+          intimacyExpectation: "追求平等、相互扶持、共同成長且細水長流的成熟伴侶關係。",
+          contrastTrait: "律政界冷靜強大的王牌律師，私下卻會為約會行程做詳細筆記、認真研究戀愛指南，反差感十足。",
+          conflictPattern: "容易因工作繁忙或過度理性分析而忽略即時情緒安撫，需要伴侶直接表達感受，他便會立刻調整。"
+        },
+        scores: {
+          emotionalNeed: 7,
+          intimacyCloseness: 6,
+          communicationStyle: 9,
+          proactiveness: 6,
+          protectiveness: 7,
+          conflictStyle: 9,
+          lifeRhythm: 9,
+          romanceVibe: 7
+        },
+        boundaries: {
+          controlLevel: 2,
+          possessivenessLevel: 4,
+          selfSacrificeHide: 5
+        },
+        styleTags: ["actionOverWords", "steadyRational", "respectBoundary"],
+        dynamicSummary: "成熟、平等且令人安心的並肩關係，他或許不常把愛掛在嘴邊，卻會用行動為你兌現每一個承諾。"
+      },
+      {
+        id: "mo_yi",
+        name: "莫弈",
+        game: "《未定事件簿》",
+        title: "心理學家・溫柔深邃的靈魂觀察者",
+        image: "assets/mo_yi.png",
+        gradient: "linear-gradient(135deg, #8b5cf6, #ec4899)",
+        profile: {
+          corePersonality: "溫文爾雅、洞察人心、從容優雅，善於傾聽與引導，內心深處有著極高的防備心與對「唯一偏愛」的執著。",
+          proactiveness: "善於以退為進與溫柔引導，看似給予充分選擇空間，實則早已為你鋪好靠近他的每一步。",
+          loveExpression: "透過精準的情緒共鳴、溫柔耐心的傾聽、充滿格調的陪伴，以及只對你卸下心防的偏愛來表達愛。",
+          emotionalExpression: "外表永遠從容微笑，極少顯露真實波動；只有面對最親密的人，才會偶爾露出微小的脆弱或佔有欲。",
+          protectiveness: "溫柔卻帶有隱秘的掌控感，希望成為你最信任的港灣，在心理與現實層面都為你隔絕傷害。",
+          communication: "語氣溫和、善於引導對話，懂得接住你所有細微情緒，但也容易因為太懂心理而讓人難以看透他的真實想法。",
+          intimacyExpectation: "渴望靈魂層面的深度契合、無條件的信任，以及只屬於彼此的獨家偏愛。",
+          contrastTrait: "表面是溫潤如玉的紳士學者，實際上內心極為敏銳果斷，對認定的人有著深沉且不容動搖的執念。",
+          conflictPattern: "習慣用溫和微笑掩飾真實情緒或過度剖析對方，可能讓伴侶產生距離感，需要打破心防坦誠相見。"
+        },
+        scores: {
+          emotionalNeed: 9,
+          intimacyCloseness: 7,
+          communicationStyle: 8,
+          proactiveness: 7,
+          protectiveness: 8,
+          conflictStyle: 8,
+          lifeRhythm: 8,
+          romanceVibe: 9
+        },
+        boundaries: {
+          controlLevel: 5,
+          possessivenessLevel: 7,
+          selfSacrificeHide: 6
+        },
+        styleTags: ["deepEmpathy", "subtleGuidance", "exclusiveDevotion"],
+        dynamicSummary: "優雅而深邃的心靈共鳴，他總能精準讀懂你未說出口的情緒，給予你最溫柔卻堅定的獨家偏愛。"
+      },
+      {
+        id: "lu_jinghe",
+        name: "陸景和",
+        game: "《未定事件簿》",
+        title: "集團繼承人・張揚率性的年下戀人",
+        image: "assets/lu_jinghe.png",
+        gradient: "linear-gradient(135deg, #ec4899, #8b5cf6)",
+        profile: {
+          corePersonality: "聰明敏銳、率性張揚、帶著少年般的傲嬌與創造力，看似玩世不恭，實則對責任與感情都極為認真專一。",
+          proactiveness: "極高。喜歡就會直接靠近、製造獨處機會，毫不掩飾對你的偏愛與吸引，充滿熱烈推進力。",
+          loveExpression: "直球撒嬌、精心策劃驚喜、可愛又霸道的獨佔宣言，以及在你需要時瞬間變得無比可靠的反差行動。",
+          emotionalExpression: "喜怒形於色、生動鮮活，會直接向你討抱、吃醋或撒嬌，但在真正沉重的壓力面前會收起玩心獨自應對。",
+          protectiveness: "強烈且直接，不願讓你受半點委屈，既有能力為你撐腰，也尊重你的才華與獨立性。",
+          communication: "充滿鬥嘴、調侃與高甜拉扯，相處氛圍輕鬆熱烈，關鍵時刻又能切換成真誠坦率的深度溝通。",
+          intimacyExpectation: "希望彼此既是並肩作戰的夥伴，也是可以毫無保留撒嬌、共享浪漫與冒險的唯一戀人。",
+          contrastTrait: "平日愛開玩笑、愛撒嬌的小少爺，在商場決策與保護你時卻展現出遠超年齡的冷靜果敢與擔當。",
+          conflictPattern: "有時因表達方式過於張揚或傲嬌吃醋而顯得孩子氣，需要伴侶給予明確的偏愛回應與耐心引導。"
+        },
+        scores: {
+          emotionalNeed: 8,
+          intimacyCloseness: 9,
+          communicationStyle: 8,
+          proactiveness: 10,
+          protectiveness: 8,
+          conflictStyle: 7,
+          lifeRhythm: 8,
+          romanceVibe: 10
+        },
+        boundaries: {
+          controlLevel: 4,
+          possessivenessLevel: 7,
+          selfSacrificeHide: 4
+        },
+        styleTags: ["playfulAttentive", "directPassion", "romanticSurprise"],
+        dynamicSummary: "充滿高甜拉扯與浪漫驚喜的熱烈戀曲，平日陪你鬥嘴撒嬌，關鍵時刻永遠是你最可靠的後盾。"
+      },
+      {
+        id: "shen_xinghui",
+        name: "沈星回",
+        game: "《戀與深空》",
+        title: "深空獵人・靜謐溫柔的星光守護者",
+        image: "assets/shen_xinghui.png",
+        gradient: "linear-gradient(135deg, #60a5fa, #a78bfa)",
+        profile: {
+          corePersonality: "溫柔隨和、安靜內斂、看似慵懶淡然，實則背負深遠使命、意志堅定，對認定的人有著跨越時間的執著與守護。",
+          proactiveness: "表面安靜不張揚，實則在靠近你這件事上異常堅定自然，總會默默出現在你身邊。",
+          loveExpression: "安靜卻長情的陪伴、細水長流的偏愛、在危險來臨前永遠擋在你身前，以及帶著微光的溫柔注視。",
+          emotionalExpression: "平和克制、很少大起大落，喜怒哀樂都藏在細節裡，偶爾會因為在意你而流露出安靜的吃醋或依賴。",
+          protectiveness: "深沉而絕對，把保護你視為本能，但平時並不會限制你的行動，而是選擇與你並肩作戰。",
+          communication: "舒服自在、不需刻意找話題也能共享寧靜，偶爾帶著冷幽默與呆萌反應，相處毫無壓力。",
+          intimacyExpectation: "渴望安穩、純粹且長久的陪伴，在紛擾世界中擁有只屬於兩人的靜謐角落。",
+          contrastTrait: "日常愛睡覺、生活氣息隨性呆萌，進入戰鬥時卻是最強大冷冽的深空獵人，反差極具安全感。",
+          conflictPattern: "習慣把過往與秘密藏在心底、不善於主動解釋，容易讓伴侶覺得有些捉摸不透，需要溫柔引導他開口。"
+        },
+        scores: {
+          emotionalNeed: 8,
+          intimacyCloseness: 7,
+          communicationStyle: 6,
+          proactiveness: 7,
+          protectiveness: 8,
+          conflictStyle: 8,
+          lifeRhythm: 6,
+          romanceVibe: 9
+        },
+        boundaries: {
+          controlLevel: 2,
+          possessivenessLevel: 6,
+          selfSacrificeHide: 7
+        },
+        styleTags: ["quietCompanion", "hiddenBurden", "respectBoundary"],
+        dynamicSummary: "靜謐而毫無壓力的星光陪伴，不需要刻意找話題也能感到安心，他總會在你回頭時安靜地站在身旁。"
+      },
+      {
+        id: "li_shen",
+        name: "黎深",
+        game: "《戀與深空》",
+        title: "心外科醫生・外冷內熱的克制守護者",
+        image: "assets/li_shen.png",
+        gradient: "linear-gradient(135deg, #0ea5e9, #38bdf8)",
+        profile: {
+          corePersonality: "冷靜理智、自律嚴謹、專業可靠，外表清冷疏離，內心卻極為細膩柔軟，把所有溫柔都留給在乎的人。",
+          proactiveness: "初期慢熱克制、注重分寸，一旦確立心意便會用極為細緻入微的日常行動默默滲透你的生活。",
+          loveExpression: "嘴上叮囑你注意身體與作息，行動上卻記住你愛吃的甜點、為你準備好一切，是典型的「行動大於言語」派。",
+          emotionalExpression: "極為內斂克制，不輕易外露脆弱與疲憊，但面對你時眼神會明顯柔和，偶爾露出無奈又縱容的笑意。",
+          protectiveness: "高度責任感與醫療級的細心守護，時刻關注你的健康與安危，雖會理性勸阻風險，但最終仍會支持你的決定。",
+          communication: "簡潔務實、偶爾帶著冷幽默與微小的口是心非，看似嚴肅實則對你極度縱容。",
+          intimacyExpectation: "追求穩定、安心、彼此信賴且能夠在忙碌生活中互相治癒的長久關係。",
+          contrastTrait: "手術台上冷靜嚴苛的頂尖醫生，私下卻喜歡甜食、對你的小任性毫無辦法，反差感極強。",
+          conflictPattern: "過於克制情緒與習慣獨自承受壓力，加上不擅長甜言蜜語，容易在需要即時情緒安撫時顯得笨拙。"
+        },
+        scores: {
+          emotionalNeed: 7,
+          intimacyCloseness: 6,
+          communicationStyle: 7,
+          proactiveness: 6,
+          protectiveness: 8,
+          conflictStyle: 8,
+          lifeRhythm: 9,
+          romanceVibe: 7
+        },
+        boundaries: {
+          controlLevel: 3,
+          possessivenessLevel: 5,
+          selfSacrificeHide: 7
+        },
+        styleTags: ["actionOverWords", "steadyRational", "quietCompanion"],
+        dynamicSummary: "外冷內熱的細水長流，他把所有溫柔都藏進生活細節與叮嚀裡，成為你最穩固的日常治癒。"
+      },
+      {
+        id: "qi_yu",
+        name: "祁煜",
+        game: "《戀與深空》",
+        title: "天才畫家・浪漫敏感的靈魂共鳴者",
+        image: "assets/qi_yu.png",
+        gradient: "linear-gradient(135deg, #f43f5e, #06b6d4)",
+        profile: {
+          corePersonality: "浪漫自由、情感豐沛、才華橫溢且敏感細膩，表面愛撒嬌、愛鬧脾氣，內心卻有著深海般的深情與執著。",
+          proactiveness: "非常主動且富有戲劇張力，會用各種「需要你」、「想見你」的理由把你留在身邊。",
+          loveExpression: "極具藝術感與浪漫儀式感，透過畫作、專屬於你的靈感、直白或傲嬌的撒嬌表達濃烈愛意。",
+          emotionalExpression: "情緒豐富直白，會明顯表現出委屈、吃醋、開心或依賴，需要伴侶給予明確的情緒回應與關注。",
+          protectiveness: "關鍵時刻極具魄力與決斷力，平時更像需要你關注的藝術家，一旦你陷入危險會展現完全不同的一面。",
+          communication: "充滿趣味鬥嘴、浪漫玩笑與情緒拉扯，相處鮮活不沉悶，靈感與情感高度同頻。",
+          intimacyExpectation: "渴望靈魂共振、絕對的偏愛與重視，希望自己永遠是你心中最特別、不可替代的存在。",
+          contrastTrait: "平日怕孤單、愛黏人撒嬌的小魚畫家，背後卻背負著深海文明的宿命與冷靜果決的另一面。",
+          conflictPattern: "情緒敏感細膩，若感受到被冷落或敷衍容易鬧小脾氣，需要伴侶給予充分的關注與肯定。"
+        },
+        scores: {
+          emotionalNeed: 10,
+          intimacyCloseness: 9,
+          communicationStyle: 8,
+          proactiveness: 9,
+          protectiveness: 7,
+          conflictStyle: 6,
+          lifeRhythm: 6,
+          romanceVibe: 10
+        },
+        boundaries: {
+          controlLevel: 3,
+          possessivenessLevel: 7,
+          selfSacrificeHide: 5
+        },
+        styleTags: ["romanticSurprise", "playfulAttentive", "deepEmpathy"],
+        dynamicSummary: "鮮活、浪漫且充滿情緒張力的靈魂同頻，他會把你寫進每一幅畫與每一次撒嬌裡，要求你只偏愛他一人。"
+      },
+      {
+        id: "qin_che",
+        name: "秦徹",
+        game: "《戀與深空》",
+        title: "暗點首領・強勢坦蕩的危險共犯",
+        image: "assets/qin_che.png",
+        gradient: "linear-gradient(135deg, #e11d48, #475569)",
+        profile: {
+          corePersonality: "強大果決、從容自信、坦蕩直接，身處暗影卻擁有極其清醒的是非觀與對伴侶的絕對尊重。",
+          proactiveness: "強勢且毫不掩飾的主導型主動，喜歡直接表達興趣與偏愛，但從不強迫，而是引導你親自走向他。",
+          loveExpression: "坦率直接的偏愛、毫無保留的信任與資源支持，用實力為你掃除一切障礙，讓你擁有絕對底氣。",
+          emotionalExpression: "從容不迫、情緒極穩，很少焦慮內耗，對你的喜歡與欣賞都表現得坦蕩而具侵略性。",
+          protectiveness: "極強但非圈養式——他相信你的力量，鼓勵你變強並與他並肩，同時確保沒人敢傷害你。",
+          communication: "充滿張力與鋒芒的對話交鋒，直來直往、不屑虛偽，既能包容你的任性，也能接住你的野心。",
+          intimacyExpectation: "追求勢均力敵、靈魂共犯、絕對信任且無需偽裝的深度親密關係。",
+          contrastTrait: "看似危險強勢的暗點之主，私下卻極具生活品味、講究規則與承諾，對你的小動作有著極高的縱容度。",
+          conflictPattern: "氣場強大且習慣主導局勢，若伴侶偏愛溫吞含蓄的相處模式，初期可能感到壓迫感，需要建立平等對話節奏。"
+        },
+        scores: {
+          emotionalNeed: 7,
+          intimacyCloseness: 7,
+          communicationStyle: 9,
+          proactiveness: 9,
+          protectiveness: 9,
+          conflictStyle: 8,
+          lifeRhythm: 8,
+          romanceVibe: 10
+        },
+        boundaries: {
+          controlLevel: 5,
+          possessivenessLevel: 8,
+          selfSacrificeHide: 4
+        },
+        styleTags: ["assertiveLeader", "directPassion", "equalPartner"],
+        dynamicSummary: "勢均力敵、坦蕩直球的強強共犯關係，他既能給予你最強大的底氣，也尊重你獨立選擇的自由。"
+      },
+      {
+        id: "xia_yizhou",
+        name: "夏以晝",
+        game: "《戀與深空》",
+        title: "遠空艦隊執艦官・深沉執著的守護者",
+        image: "assets/xia_yizhou.png",
+        gradient: "linear-gradient(135deg, #ea580c, #f59e0b)",
+        profile: {
+          corePersonality: "表面爽朗陽光、可靠周到、極具親和力，內心卻有著深沉克制的執念、強烈的責任感與不容退讓的守護意志。",
+          proactiveness: "在照顧與陪伴上無微不至、主動滲透你生活的每個角落，情感界線突破後則展現出深沉而炙熱的主動。",
+          loveExpression: "透過無數個日常細節的偏愛、時刻把你放在心尖上的習慣，以及充滿張力的目光與守護行動表達愛。",
+          emotionalExpression: "習慣以溫和可靠的笑容包裝深層情緒，在關於你的安危與歸屬上則會流露出難掩的執著與克制不住的在乎。",
+          protectiveness: "極高且帶有強烈的「為你築起安全堡壘」的傾向，渴望將所有風雨擋在你身外，希望你永遠平安依賴他。",
+          communication: "既有多年相伴的熟稔默契與輕鬆調侃，又在情感升溫時充滿克制與突破界線的強烈張力。",
+          intimacyExpectation: "渴望成為你唯一且最穩固的歸宿，彼此緊密相連、無可替代。",
+          contrastTrait: "平日是廚藝精湛、溫暖可靠的陽光形象，執艦官身份下卻冷靜凌厲、掌控全局，對你有著極深的執著。",
+          conflictPattern: "保護欲與想替你承擔一切的傾向較強，若過度想把你護在羽翼下，可能與渴望完全獨立自主的伴侶產生拉扯。"
+        },
+        scores: {
+          emotionalNeed: 9,
+          intimacyCloseness: 9,
+          communicationStyle: 7,
+          proactiveness: 8,
+          protectiveness: 10,
+          conflictStyle: 7,
+          lifeRhythm: 8,
+          romanceVibe: 9
+        },
+        boundaries: {
+          controlLevel: 7,
+          possessivenessLevel: 9,
+          selfSacrificeHide: 7
+        },
+        styleTags: ["warmCompanion", "assertiveLeader", "exclusiveDevotion"],
+        dynamicSummary: "無微不至的日常偏愛與深沉執著的交織，他既是你最熟悉的避風港，也是絕不放手的堅定守護者。"
+      }
+    ];
+
+    // =========================================================================
+    // 3. 十二題混合情境題庫（涵蓋八大面向、中立選項、角色互動特徵與偏好/界線區分）
+    // =========================================================================
+    const QUESTIONS = [
+      {
+        id: 1,
+        dimension: "emotionalNeed",
+        typeLabel: "沉浸式戀愛情境・情緒承接",
+        text: "結束了疲憊又受挫的一天，你推開家門時，最希望另一半如何陪伴你？",
+        options: [
+          {
+            label: "什麼都不用多問，先給我一個安靜溫暖的擁抱，靜靜陪在我身邊就好。",
+            dimTargets: { emotionalNeed: 9, intimacyCloseness: 8, communicationStyle: 6 },
+            traitBonus: ["quietCompanion", "warmCompanion"]
+          },
+          {
+            label: "敏銳察覺我的低落，溫柔地引導我傾訴，幫我把心裡打結的情緒慢慢理順。",
+            dimTargets: { emotionalNeed: 10, communicationStyle: 9 },
+            traitBonus: ["deepEmpathy"]
+          },
+          {
+            label: "用幽默輕鬆的玩笑逗我開心，帶我去吃頓好的或換個心情轉移注意力。",
+            dimTargets: { emotionalNeed: 8, romanceVibe: 9, intimacyCloseness: 8 },
+            traitBonus: ["playfulAttentive", "romanticSurprise"]
+          },
+          {
+            label: "直接幫我把現實中的麻煩事處理妥當，讓我知道「有他在，天塌下來都沒事」。",
+            dimTargets: { protectiveness: 9, lifeRhythm: 8, communicationStyle: 8 },
+            traitBonus: ["assertiveLeader", "actionOverWords"]
+          },
+          {
+            label: "視情況而定，有時候想安靜獨處，有時候希望有人陪我聊聊。",
+            isNeutral: true,
+            dimTargets: { emotionalNeed: 7.5, intimacyCloseness: 7 },
+            traitBonus: []
+          }
+        ]
+      },
+      {
+        id: 2,
+        dimension: "intimacyCloseness",
+        typeLabel: "日常交往與相處情境・親密距離",
+        text: "進入穩定戀愛關係後，你最嚮往的日常相處距離是哪一種？",
+        options: [
+          {
+            label: "高頻率黏在一起，無論做什麼小事都想第一時間跟對方分享、隨時報備。",
+            dimTargets: { intimacyCloseness: 10, emotionalNeed: 9, romanceVibe: 9 },
+            traitBonus: ["warmCompanion", "exclusiveDevotion"]
+          },
+          {
+            label: "在同一個空間裡各忙各的，偶爾抬頭對視微笑，自在又沒有壓迫感。",
+            dimTargets: { intimacyCloseness: 7, lifeRhythm: 8 },
+            traitBonus: ["quietCompanion", "steadyRational"]
+          },
+          {
+            label: "各自擁有獨立的事業與生活重心，但約會與相處時全心全意投入彼此。",
+            dimTargets: { intimacyCloseness: 6, lifeRhythm: 9, communicationStyle: 8 },
+            traitBonus: ["equalPartner", "respectBoundary"]
+          },
+          {
+            label: "沒有特別偏好，只要兩個人在一起時覺得舒服自然就好。",
+            isNeutral: true,
+            dimTargets: { intimacyCloseness: 7.5 },
+            traitBonus: []
+          }
+        ]
+      },
+      {
+        id: 3,
+        dimension: "proactiveness",
+        typeLabel: "戀愛心理與主動性・心動靠近",
+        text: "面對心儀的對象時，你在感情中的主動性與互動節奏比較接近？",
+        options: [
+          {
+            label: "我是直球行動派，喜歡就會主動靠近、製造見面機會，希望對方也熱情回應。",
+            dimTargets: { proactiveness: 10, communicationStyle: 9, romanceVibe: 9 },
+            traitBonus: ["directPassion"]
+          },
+          {
+            label: "我比較慢熱矜持，希望對方能堅定而有耐心地一步步走近我、融化我。",
+            dimTargets: { proactiveness: 8, emotionalNeed: 8, protectiveness: 8 },
+            traitBonus: ["subtleGuidance", "warmCompanion"]
+          },
+          {
+            label: "喜歡互相試探、眼神交會與言語拉扯的曖昧張力，享受勢均力敵的靠近。",
+            dimTargets: { proactiveness: 8, romanceVibe: 10, communicationStyle: 8 },
+            traitBonus: ["subtleGuidance", "assertiveLeader"]
+          },
+          {
+            label: "看對方給我的感覺而定，若對方真誠可靠，我也會逐步變得主動。",
+            isNeutral: true,
+            dimTargets: { proactiveness: 7.5 },
+            traitBonus: []
+          }
+        ]
+      },
+      {
+        id: 4,
+        dimension: "communicationStyle",
+        typeLabel: "雙方互動與溝通・情感表達",
+        text: "在日常對話與表達愛意的方式上，哪種溝通風格最能讓你心動？",
+        options: [
+          {
+            label: "坦率直球、毫不掩飾的偏愛宣言，想念或吃醋都會直接告訴我。",
+            dimTargets: { communicationStyle: 9, proactiveness: 9, romanceVibe: 9 },
+            traitBonus: ["directPassion"]
+          },
+          {
+            label: "平時愛鬥嘴開玩笑，但關鍵時刻總能說出最真誠戳心的話。",
+            dimTargets: { communicationStyle: 8, romanceVibe: 9, intimacyCloseness: 8 },
+            traitBonus: ["playfulAttentive"]
+          },
+          {
+            label: "語氣溫和、善於傾聽，總能精準接住我每一句話背後的潛台詞。",
+            dimTargets: { communicationStyle: 9, emotionalNeed: 9 },
+            traitBonus: ["deepEmpathy"]
+          },
+          {
+            label: "甜言蜜語不多，但事事有回應、件件有著落，用行動證明一切。",
+            dimTargets: { communicationStyle: 7, lifeRhythm: 9, protectiveness: 8 },
+            traitBonus: ["actionOverWords", "steadyRational"]
+          }
+        ]
+      },
+      {
+        id: 5,
+        dimension: "protectiveness",
+        typeLabel: "偏好與界線區分・保護欲與自由",
+        text: "【界線校準】當你面臨一個具有一定風險、但對你很重要的決定時，你希望伴侶怎麼做？",
+        options: [
+          {
+            label: "全力支持我的選擇，與我並肩作戰，只在必要時為我兜底（不干涉我的決定權）。",
+            dimTargets: { protectiveness: 8, lifeRhythm: 8, communicationStyle: 8 },
+            boundaryUpdate: { maxControlAllowed: 4, maxPossessivenessAllowed: 8 },
+            traitBonus: ["respectBoundary", "equalPartner"]
+          },
+          {
+            label: "希望他強勢地把我護在身後，替我擋掉所有風險與麻煩，讓我安心依賴他。",
+            dimTargets: { protectiveness: 10, intimacyCloseness: 9, emotionalNeed: 9 },
+            boundaryUpdate: { maxControlAllowed: 9, maxPossessivenessAllowed: 10 },
+            traitBonus: ["assertiveLeader", "exclusiveDevotion"]
+          },
+          {
+            label: "理性幫我分析利弊、做好萬全準備後再陪我一起去，既照顧安全也尊重意願。",
+            dimTargets: { protectiveness: 8, communicationStyle: 9, lifeRhythm: 9 },
+            boundaryUpdate: { maxControlAllowed: 5, maxPossessivenessAllowed: 7 },
+            traitBonus: ["steadyRational", "actionOverWords"]
+          },
+          {
+            label: "可以接受他的擔心與保護，但前提是必須事先跟我商量，不能擅自替我做主。",
+            dimTargets: { protectiveness: 7, communicationStyle: 9 },
+            boundaryUpdate: { maxControlAllowed: 3, maxPossessivenessAllowed: 7 },
+            traitBonus: ["respectBoundary"]
+          }
+        ]
+      },
+      {
+        id: 6,
+        dimension: "conflictStyle",
+        typeLabel: "使用者面對伴侶的反應・衝突處理",
+        text: "當你們之間因為誤會或意見不合產生冷場時，你通常會如何處理？",
+        options: [
+          {
+            label: "希望當下就能把話攤開講清楚，不喜歡帶著誤會過夜，對事不對人。",
+            dimTargets: { conflictStyle: 9, communicationStyle: 9 },
+            traitBonus: ["steadyRational", "directPassion"]
+          },
+          {
+            label: "先各自冷靜一會兒整理情緒，等氣消了再用溫和的方式好好溝通。",
+            dimTargets: { conflictStyle: 8, intimacyCloseness: 7 },
+            traitBonus: ["quietCompanion", "deepEmpathy"]
+          },
+          {
+            label: "其實只要對方先軟化態度、抱抱我或遞個台階，我就會立刻心軟和好。",
+            dimTargets: { conflictStyle: 7, emotionalNeed: 9, intimacyCloseness: 9 },
+            traitBonus: ["playfulAttentive", "warmCompanion"]
+          },
+          {
+            label: "視衝突的原因而定，小事容易翻篇，原則問題則需要認真談開。",
+            isNeutral: true,
+            dimTargets: { conflictStyle: 8 },
+            traitBonus: []
+          }
+        ]
+      },
+      {
+        id: 7,
+        dimension: "lifeRhythm",
+        typeLabel: "價值觀與生活節奏・未來藍圖",
+        text: "關於兩人的生活步調與未來規劃，哪種狀態最符合你的理想？",
+        options: [
+          {
+            label: "有清晰的人生目標與穩定規劃，彼此自律上進、共同構築安穩未來。",
+            dimTargets: { lifeRhythm: 10, communicationStyle: 8 },
+            traitBonus: ["steadyRational"]
+          },
+          {
+            label: "充滿生活煙火氣與溫暖細節，一起做飯、散步、把平凡日子過出幸福感。",
+            dimTargets: { lifeRhythm: 8, intimacyCloseness: 9, emotionalNeed: 8 },
+            traitBonus: ["warmCompanion"]
+          },
+          {
+            label: "不被框架束縛，跟著靈感與心意去探索世界、體驗各種新鮮浪漫的冒險。",
+            dimTargets: { lifeRhythm: 6, romanceVibe: 10, proactiveness: 9 },
+            traitBonus: ["romanticSurprise"]
+          },
+          {
+            label: "沒有特別設限，只要兩個人步調能互相體諒、彼此配合就好。",
+            isNeutral: true,
+            dimTargets: { lifeRhythm: 7.5 },
+            traitBonus: []
+          }
+        ]
+      },
+      {
+        id: 8,
+        dimension: "romanceVibe",
+        typeLabel: "戀愛氛圍偏好・心動瞬間",
+        text: "在戀愛關係中，哪一種情感氛圍最能讓你產生「就是他了」的宿命感？",
+        options: [
+          {
+            label: "細水長流的溫柔守護，無論世界怎麼變，他永遠是你回頭就能看見的港灣。",
+            dimTargets: { romanceVibe: 8, emotionalNeed: 9, protectiveness: 8 },
+            traitBonus: ["warmCompanion", "quietCompanion"]
+          },
+          {
+            label: "充滿張力與眼神拉扯的強強碰撞，既危險又迷人，彼此是唯一的共犯。",
+            dimTargets: { romanceVibe: 10, proactiveness: 9, protectiveness: 9 },
+            traitBonus: ["assertiveLeader", "directPassion"]
+          },
+          {
+            label: "極致浪漫的儀式感與藝術氣息，他把所有靈感與偏愛都傾注在你身上。",
+            dimTargets: { romanceVibe: 10, emotionalNeed: 9, intimacyCloseness: 9 },
+            traitBonus: ["romanticSurprise"]
+          },
+          {
+            label: "表面克制守禮、實則只對你破例的深情反差，每一次靠近都令人心跳加速。",
+            dimTargets: { romanceVibe: 9, communicationStyle: 8, lifeRhythm: 8 },
+            traitBonus: ["actionOverWords", "deepEmpathy"]
+          }
+        ]
+      },
+      {
+        id: 9,
+        dimension: "protectiveness",
+        typeLabel: "相處互動情境・隱瞞與承擔",
+        text: "【互動情境】如果你發現伴侶習慣獨自承擔沉重壓力或傷痛，為了不讓你擔心而選擇報喜不報憂，你的反應是？",
+        options: [
+          {
+            label: "會心疼又有些生氣，我會溫柔而堅定地告訴他「我想和你一起分擔，而不是只被保護」。",
+            dimTargets: { emotionalNeed: 9, communicationStyle: 9, protectiveness: 8 },
+            boundaryUpdate: { hideBurdenTolerance: 7 },
+            traitBonus: ["hiddenBurden", "equalPartner"]
+          },
+          {
+            label: "能理解他的苦心，我不會逼問他，而是用更溫暖的陪伴讓他慢慢願意對我卸下心防。",
+            dimTargets: { emotionalNeed: 9, conflictStyle: 9, intimacyCloseness: 8 },
+            boundaryUpdate: { hideBurdenTolerance: 9 },
+            traitBonus: ["hiddenBurden", "quietCompanion"]
+          },
+          {
+            label: "這會讓我很沒有安全感，我希望伴侶無論發生什麼事都能第一時間對我完全坦白。",
+            dimTargets: { communicationStyle: 10, conflictStyle: 8 },
+            boundaryUpdate: { hideBurdenTolerance: 3 },
+            traitBonus: ["directPassion", "steadyRational"]
+          },
+          {
+            label: "可以接受他偶爾自己消化，但涉及我們共同未來的事情必須坦誠。",
+            isNeutral: true,
+            dimTargets: { communicationStyle: 8 },
+            boundaryUpdate: { hideBurdenTolerance: 6 },
+            traitBonus: []
+          }
+        ]
+      },
+      {
+        id: 10,
+        dimension: "protectiveness",
+        typeLabel: "偏好與界線區分・主導欲與佔有欲",
+        text: "【界線校準】面對比較強勢、具有主導欲與強烈偏愛執著的伴侶，你的真實感受是？",
+        options: [
+          {
+            label: "非常心動！喜歡他強勢主導、把我放在絕對偏愛的位置，這種被堅定選擇的感覺很有安全感。",
+            dimTargets: { protectiveness: 10, proactiveness: 9, romanceVibe: 10 },
+            boundaryUpdate: { maxControlAllowed: 9, maxPossessivenessAllowed: 10 },
+            traitBonus: ["assertiveLeader", "exclusiveDevotion"]
+          },
+          {
+            label: "欣賞他的強大與果斷，但前提是他必須尊重我的獨立意志，不能控制我的社交與決定。",
+            dimTargets: { protectiveness: 8, communicationStyle: 9, lifeRhythm: 8 },
+            boundaryUpdate: { maxControlAllowed: 5, maxPossessivenessAllowed: 8 },
+            traitBonus: ["equalPartner", "respectBoundary"]
+          },
+          {
+            label: "我更偏好溫和、平等、不帶壓迫感的相處方式，太強勢的主導氣場會讓我覺得有壓力。",
+            dimTargets: { emotionalNeed: 8, intimacyCloseness: 7, conflictStyle: 8 },
+            boundaryUpdate: { maxControlAllowed: 3, maxPossessivenessAllowed: 5 },
+            traitBonus: ["quietCompanion", "warmCompanion", "steadyRational"]
+          },
+          {
+            label: "可以接受適度的佔有欲與吃醋，只要不演變成不信任或過度干涉就好。",
+            isNeutral: true,
+            dimTargets: { protectiveness: 7.5 },
+            boundaryUpdate: { maxControlAllowed: 5, maxPossessivenessAllowed: 7 },
+            traitBonus: []
+          }
+        ]
+      },
+      {
+        id: 11,
+        dimension: "communicationStyle",
+        typeLabel: "相處互動情境・含蓄與細節之愛",
+        text: "【互動情境】如果一位伴侶不擅長說肉麻情話，甚至偶爾有些口是心非，但總在細節裡默默記住你所有的喜好，你會？",
+        options: [
+          {
+            label: "覺得這種反差超級可愛！行動上的細心比任何甜言蜜語都更讓我心動。",
+            dimTargets: { lifeRhythm: 9, protectiveness: 8, communicationStyle: 7 },
+            traitBonus: ["actionOverWords", "steadyRational"]
+          },
+          {
+            label: "我會主動逗他、引導他說出心裡話，享受看他耳根泛紅卻又縱容我的樣子。",
+            dimTargets: { proactiveness: 9, romanceVibe: 9, intimacyCloseness: 8 },
+            traitBonus: ["actionOverWords", "playfulAttentive"]
+          },
+          {
+            label: "雖然知道他對我好，但我還是更渴望能聽到明確、直接的情感表達與回應。",
+            dimTargets: { emotionalNeed: 9, communicationStyle: 9, romanceVibe: 9 },
+            traitBonus: ["directPassion", "romanticSurprise"]
+          },
+          {
+            label: "可以接受，只要在重要的時刻能確認彼此的心意就足夠了。",
+            isNeutral: true,
+            dimTargets: { communicationStyle: 7.5 },
+            traitBonus: []
+          }
+        ]
+      },
+      {
+        id: 12,
+        dimension: "romanceVibe",
+        typeLabel: "相處互動情境・反差魅力",
+        text: "【互動情境】如果伴侶平時看起來愛開玩笑、愛撒嬌或有些不正經，但一遇到正事或你需要幫助時瞬間變得無比冷靜可靠，這對你的吸引力是？",
+        options: [
+          {
+            label: "完全無法抗拒！日常輕鬆有趣、關鍵時刻能撐起一片天的反差感最迷人。",
+            dimTargets: { romanceVibe: 10, intimacyCloseness: 9, proactiveness: 9 },
+            traitBonus: ["playfulAttentive", "warmCompanion"]
+          },
+          {
+            label: "很喜歡這種相處活力，但我也會想多了解他收起玩笑後最真實、深層的一面。",
+            dimTargets: { emotionalNeed: 9, communicationStyle: 8, romanceVibe: 8 },
+            traitBonus: ["playfulAttentive", "deepEmpathy"]
+          },
+          {
+            label: "相比反差感，我更偏愛從頭到尾都沉穩一致、情緒穩定可靠的伴侶。",
+            dimTargets: { lifeRhythm: 9, conflictStyle: 9, communicationStyle: 8 },
+            traitBonus: ["steadyRational", "quietCompanion"]
+          },
+          {
+            label: "沒有特別偏好，真誠對待彼此才是最重要的。",
+            isNeutral: true,
+            dimTargets: { romanceVibe: 7.5 },
+            traitBonus: []
+          }
+        ]
+      }
+    ];
+
+    // =========================================================================
+    // 4. 測驗狀態管理
+    // =========================================================================
+    const state = {
+      currentIndex: 0,
+      answers: new Array(QUESTIONS.length).fill(null)
+    };
+
+    // DOM 參照
+    const introView = document.getElementById("intro-view");
+    const quizView = document.getElementById("quiz-view");
+    const calcView = document.getElementById("calc-view");
+    const resultView = document.getElementById("result-view");
+
+    const startBtn = document.getElementById("start-btn");
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
+    const restartBtn = document.getElementById("restart-btn");
+
+    const dimensionBadge = document.getElementById("dimension-badge");
+    const stepCounter = document.getElementById("step-counter");
+    const progressFill = document.getElementById("progress-fill");
+    const stepDots = document.getElementById("step-dots");
+    const questionContainer = document.getElementById("question-container");
+    const questionType = document.getElementById("question-type");
+    const questionText = document.getElementById("question-text");
+    const optionsList = document.getElementById("options-list");
+
+    const top1Container = document.getElementById("top1-container");
+    const runnerUpsContainer = document.getElementById("runner-ups-container");
+
+    // =========================================================================
+    // 5. 測驗渲染與操作邏輯（支援返回修改任意題目並重新計算）
+    // =========================================================================
+    function startQuiz() {
+      state.currentIndex = 0;
+      state.answers = new Array(QUESTIONS.length).fill(null);
+      introView.classList.add("hidden");
+      resultView.classList.add("hidden");
+      calcView.classList.add("hidden");
+      quizView.classList.remove("hidden");
+      renderQuestion();
+    }
+
+    function renderStepDots() {
+      stepDots.innerHTML = "";
+      const highestReachable = state.answers.findIndex(a => a === null);
+      const maxIndex = highestReachable === -1 ? QUESTIONS.length - 1 : highestReachable;
+
+      QUESTIONS.forEach((q, idx) => {
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "step-dot";
+        dot.textContent = idx + 1;
+        dot.title = `跳至第 ${idx + 1} 題（${DIMENSIONS[q.dimension]}）`;
+
+        if (state.answers[idx] !== null) dot.classList.add("answered");
+        if (idx === state.currentIndex) dot.classList.add("active");
+        if (idx > maxIndex) dot.disabled = true;
+
+        dot.addEventListener("click", () => {
+          if (idx <= maxIndex) {
+            state.currentIndex = idx;
+            renderQuestion();
+          }
+        });
+        stepDots.appendChild(dot);
+      });
+    }
+
+    function renderQuestion() {
+      const q = QUESTIONS[state.currentIndex];
+      const total = QUESTIONS.length;
+      const selectedOptionIdx = state.answers[state.currentIndex];
+
+      dimensionBadge.textContent = `✦ ${DIMENSIONS[q.dimension]}`;
+      stepCounter.textContent = `第 ${state.currentIndex + 1}／${total} 題`;
+      progressFill.style.width = `${((state.currentIndex + 1) / total) * 100}%`;
+
+      questionType.textContent = q.typeLabel;
+      questionText.textContent = q.text;
+
+      // 重新觸發微幅進場動畫
+      questionContainer.classList.remove("fade-in");
+      void questionContainer.offsetWidth;
+      questionContainer.classList.add("fade-in");
+
+      optionsList.innerHTML = "";
+      const letters = ["A", "B", "C", "D", "E"];
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "option-btn" + (selectedOptionIdx === idx ? " selected" : "");
+
+        const neutralBadge = opt.isNeutral
+          ? `<span class="option-neutral-tag">中立彈性選項</span>`
+          : "";
+
+        btn.innerHTML = `
+          <span class="option-marker">${letters[idx]}</span>
+          <span class="option-content">${opt.label}${neutralBadge}</span>
+        `;
+
+        btn.addEventListener("click", () => {
+          state.answers[state.currentIndex] = idx;
+          renderQuestion();
+        });
+
+        optionsList.appendChild(btn);
+      });
+
+      renderStepDots();
+
+      prevBtn.disabled = state.currentIndex === 0;
+      nextBtn.disabled = selectedOptionIdx === null;
+      nextBtn.innerHTML = state.currentIndex === total - 1
+        ? `<span>揭曉命定結果</span><span>✦</span>`
+        : `<span>下一題</span><span>→</span>`;
+    }
+
+    prevBtn.addEventListener("click", () => {
+      if (state.currentIndex > 0) {
+        state.currentIndex--;
+        renderQuestion();
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (state.answers[state.currentIndex] === null) return;
+      if (state.currentIndex < QUESTIONS.length - 1) {
+        state.currentIndex++;
+        renderQuestion();
+      } else {
+        showResultsWithTransition();
+      }
+    });
+
+    startBtn.addEventListener("click", startQuiz);
+    restartBtn.addEventListener("click", startQuiz);
+
+    // =========================================================================
+    // 6. 雙向適配＋關係界線計分演算法（每次完全依據 answers 重新計算，絕不重複累加）
+    // =========================================================================
+    function calculateMatches() {
+      const dimSum = {};
+      const dimWeight = {};
+      Object.keys(DIMENSIONS).forEach(dim => {
+        dimSum[dim] = 0;
+        dimWeight[dim] = 0;
+      });
+
+      const boundaries = {
+        maxControlAllowed: 6,
+        maxPossessivenessAllowed: 8,
+        hideBurdenTolerance: 6
+      };
+
+      const userTraitCounts = {};
+
+      QUESTIONS.forEach((q, qIdx) => {
+        const ansIdx = state.answers[qIdx];
+        if (ansIdx === null || ansIdx === undefined) return;
+        const opt = q.options[ansIdx];
+
+        const weight = opt.isNeutral ? 0.35 : 1.0;
+
+        if (opt.dimTargets) {
+          Object.entries(opt.dimTargets).forEach(([dim, targetVal]) => {
+            dimSum[dim] += targetVal * weight;
+            dimWeight[dim] += weight;
+          });
+        }
+
+        if (opt.boundaryUpdate) {
+          Object.entries(opt.boundaryUpdate).forEach(([bKey, bVal]) => {
+            boundaries[bKey] = bVal;
+          });
+        }
+
+        if (opt.traitBonus && opt.traitBonus.length > 0) {
+          opt.traitBonus.forEach(tag => {
+            userTraitCounts[tag] = (userTraitCounts[tag] || 0) + 1;
+          });
+        }
+      });
+
+      const userIdeal = {};
+      Object.keys(DIMENSIONS).forEach(dim => {
+        userIdeal[dim] = dimWeight[dim] > 0 ? dimSum[dim] / dimWeight[dim] : 7.5;
+      });
+
+      const rawResults = CHARACTERS.map(char => {
+        let dimCompatibilitySum = 0;
+        let totalDimWeight = 0;
+        const dimAlignments = {};
+
+        Object.keys(DIMENSIONS).forEach(dim => {
+          const w = Math.max(0.5, dimWeight[dim]);
+          const diff = Math.abs(char.scores[dim] - userIdeal[dim]);
+          const alignPct = Math.max(40, 100 - diff * 11.5);
+          dimAlignments[dim] = Math.round(alignPct);
+          dimCompatibilitySum += alignPct * w;
+          totalDimWeight += w;
+        });
+
+        let baseScore = dimCompatibilitySum / totalDimWeight;
+
+        let boundaryPenalty = 0;
+        let boundaryNote = "";
+
+        if (char.boundaries.controlLevel > boundaries.maxControlAllowed) {
+          const excess = char.boundaries.controlLevel - boundaries.maxControlAllowed;
+          boundaryPenalty += excess * 3.8;
+          boundaryNote = "他在保護你的同時可能較具主導或安排傾向，相處時需要明確溝通你的個人自由界線。";
+        }
+
+        if (char.boundaries.possessivenessLevel > boundaries.maxPossessivenessAllowed) {
+          const excess = char.boundaries.possessivenessLevel - boundaries.maxPossessivenessAllowed;
+          boundaryPenalty += excess * 2.5;
+        }
+
+        if (char.boundaries.selfSacrificeHide >= 7 && boundaries.hideBurdenTolerance <= 4) {
+          boundaryPenalty += 4.5;
+          boundaryNote = "他習慣獨自承擔沉重壓力或秘密，而你非常重視完全坦白，需要溫柔引導他對你卸下防備。";
+        }
+
+        let traitRaw = 0;
+        char.styleTags.forEach(tag => {
+          if (userTraitCounts[tag]) {
+            traitRaw += Math.min(2, userTraitCounts[tag]) * 2.4;
+          }
+        });
+        const traitBonus = Math.min(9.5, traitRaw);
+
+        const finalRaw = Math.max(52, Math.min(99, baseScore - boundaryPenalty + traitBonus));
+
+        return {
+          char,
+          rawScore: finalRaw,
+          dimAlignments,
+          boundaryNote,
+          userIdeal
+        };
+      });
+
+      rawResults.sort((a, b) => b.rawScore - a.rawScore);
+
+      const topRaw = rawResults[0].rawScore;
+      const scaleShift = topRaw < 85 ? (86 - topRaw) : (topRaw > 98 ? (98 - topRaw) : 0);
+
+      return rawResults.map(item => ({
+        ...item,
+        matchPercent: Math.round(Math.max(55, Math.min(98, item.rawScore + scaleShift)))
+      }));
+    }
+
+    // =========================================================================
+    // 7. 動態差異化文案生成（依角色九大原作設定與計分結果動態組合）
+    // =========================================================================
+    function getTopDimensions(dimAlignments, count = 2) {
+      return Object.entries(dimAlignments)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, count)
+        .map(([dimKey, score]) => ({
+          key: dimKey,
+          label: DIMENSIONS[dimKey],
+          score
+        }));
+    }
+
+    function generateTop1Analysis(item) {
+      const { char, dimAlignments, boundaryNote } = item;
+      const topDims = getTopDimensions(dimAlignments, 2);
+
+      const primaryReason = `你與${char.name}在「${topDims[0].label}」（契合度 ${topDims[0].score}%）與「${topDims[1].label}」（契合度 ${topDims[1].score}%）上高度同頻。${char.profile.corePersonality}這恰好回應了你在關係中最重視的情感節奏與安全感需求。`;
+
+      const interactionMode = `${char.dynamicSummary}${char.profile.communication}在表達愛意時，他習慣${char.profile.loveExpression.replace(/^透過/, "透過")}`;
+
+      const compatibleTraits = `${char.profile.contrastTrait}同時，他對親密關係抱持「${char.profile.intimacyExpectation.replace(/^渴望|^追求|^希望/, "")}」的態度，與你對戀愛界線及相處距離的期待不謀而合。`;
+
+      const friction = boundaryNote
+        ? `${boundaryNote}此外，依他的性格特質，${char.profile.conflictPattern}`
+        : `${char.profile.conflictPattern}只要在關鍵時刻多一份坦誠表達，你們便能將磨合轉化為更深層的信任。`;
+
+      return { primaryReason, interactionMode, compatibleTraits, friction };
+    }
+
+    function generateRunnerUpAnalysis(item, top1Item) {
+      const { char, dimAlignments } = item;
+      const top1Char = top1Item.char;
+      const bestDim = getTopDimensions(dimAlignments, 1)[0];
+
+      const reason = `你們在「${bestDim.label}」（契合度 ${bestDim.score}%）表現亮眼。${char.profile.corePersonality}`;
+
+      let maxDiffDim = "romanceVibe";
+      let maxDiffVal = -1;
+      Object.keys(DIMENSIONS).forEach(dim => {
+        const d = Math.abs(char.scores[dim] - top1Char.scores[dim]);
+        if (d > maxDiffVal) {
+          maxDiffVal = d;
+          maxDiffDim = dim;
+        }
+      });
+
+      const diffText = maxDiffVal >= 2
+        ? `相較於${top1Char.name}，${char.name}在「${DIMENSIONS[maxDiffDim]}」上展現出截然不同的魅力——${char.profile.proactiveness}`
+        : `雖然整體適配方向與${top1Char.name}相近，但${char.name}更偏向「${char.title.split("・")[1]}」的相處質感，帶來另一種心動節奏。`;
+
+      const potentialDynamic = `${char.dynamicSummary}若你們走進彼此的世界，${char.profile.intimacyExpectation}`;
+
+      return { reason, diffText, potentialDynamic };
+    }
+
+    function buildPortraitHTML(char, isLarge = true) {
+      const initial = char.name.slice(0, 1);
+      return `
+        <img
+          src="${char.image}"
+          alt="${char.name}立繪"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        />
+        <div class="portrait-fallback" style="display: none; background: ${char.gradient};">
+          <span class="char-initial" style="${isLarge ? "" : "font-size: 2.1rem;"}">${initial}</span>
+          <span class="char-sub">${char.name}</span>
+        </div>
+      `;
+    }
+
+    function showResultsWithTransition() {
+      quizView.classList.add("hidden");
+      calcView.classList.remove("hidden");
+
+      setTimeout(() => {
+        const results = calculateMatches();
+        renderResults(results);
+        calcView.classList.add("hidden");
+        resultView.classList.remove("hidden");
+        resultView.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 650);
+    }
+
+    function renderResults(results) {
+      const top1 = results[0];
+      const top2 = results[1];
+      const top3 = results[2];
+
+      const top1Analysis = generateTop1Analysis(top1);
+
+      const dimBarsHTML = Object.entries(top1.dimAlignments)
+        .map(([dimKey, pct]) => `
+          <div class="dim-bar-item">
+            <div class="dim-bar-label">
+              <span>${DIMENSIONS[dimKey]}</span>
+              <span>${pct}%</span>
+            </div>
+            <div class="dim-bar-track">
+              <div class="dim-bar-fill" style="width: ${pct}%;"></div>
+            </div>
+          </div>
+        `).join("");
+
+      const p = top1.char.profile;
+      top1Container.innerHTML = `
+        <article class="top1-card fade-in">
+          <div class="crown-ribbon">👑 第 1 名・你的命定男主角</div>
+
+          <div class="top1-hero">
+            <div class="portrait-frame">
+              ${buildPortraitHTML(top1.char, true)}
+            </div>
+
+            <div class="top1-identity">
+              <span class="game-tag">${top1.char.game}</span>
+              <div class="top1-name-row">
+                <h3 class="top1-name">${top1.char.name}</h3>
+                <span class="match-score-pill">♡ 匹配度 ${top1.matchPercent}%</span>
+              </div>
+              <p class="char-title-line">${top1.char.title}</p>
+
+              <div class="dimension-bars">
+                ${dimBarsHTML}
+              </div>
+            </div>
+          </div>
+
+          <div class="analysis-grid">
+            <div class="analysis-box">
+              <h4>✦ 主要匹配原因</h4>
+              <p>${top1Analysis.primaryReason}</p>
+            </div>
+            <div class="analysis-box">
+              <h4>♡ 你與他的相處模式</h4>
+              <p>${top1Analysis.interactionMode}</p>
+            </div>
+            <div class="analysis-box">
+              <h4>✧ 雙方最契合的特質</h4>
+              <p>${top1Analysis.compatibleTraits}</p>
+            </div>
+            <div class="analysis-box friction">
+              <h4>⚡ 可能出現的相處摩擦</h4>
+              <p>${top1Analysis.friction}</p>
+            </div>
+          </div>
+
+          <button id="toggle-canon-btn" class="profile-toggle-btn" type="button">
+            <span>📖 展開查看「${top1.char.name}」完整戀愛人格檔案（9 項原作設定）</span>
+          </button>
+
+          <div id="canon-drawer" class="canon-profile-drawer hidden">
+            <div class="canon-grid">
+              <div class="canon-item"><strong>1. 核心性格</strong><span>${p.corePersonality}</span></div>
+              <div class="canon-item"><strong>2. 戀愛中的主動程度</strong><span>${p.proactiveness}</span></div>
+              <div class="canon-item"><strong>3. 表達愛意的方式</strong><span>${p.loveExpression}</span></div>
+              <div class="canon-item"><strong>4. 情緒表達方式</strong><span>${p.emotionalExpression}</span></div>
+              <div class="canon-item"><strong>5. 對伴侶的保護欲</strong><span>${p.protectiveness}</span></div>
+              <div class="canon-item"><strong>6. 互動與溝通模式</strong><span>${p.communication}</span></div>
+              <div class="canon-item"><strong>7. 對親密關係的期待</strong><span>${p.intimacyExpectation}</span></div>
+              <div class="canon-item"><strong>8. 特殊性格與反差特徵</strong><span>${p.contrastTrait}</span></div>
+              <div class="canon-item"><strong>9. 潛在相處摩擦與衝突模式</strong><span>${p.conflictPattern}</span></div>
+            </div>
+          </div>
+        </article>
+      `;
+
+      const toggleCanonBtn = document.getElementById("toggle-canon-btn");
+      const canonDrawer = document.getElementById("canon-drawer");
+      toggleCanonBtn.addEventListener("click", () => {
+        const isHidden = canonDrawer.classList.toggle("hidden");
+        toggleCanonBtn.innerHTML = isHidden
+          ? `<span>📖 展開查看「${top1.char.name}」完整戀愛人格檔案（9 項原作設定）</span>`
+          : `<span>▲ 收合「${top1.char.name}」戀愛人格檔案</span>`;
+      });
+
+      runnerUpsContainer.innerHTML = [top2, top3].map((item, idx) => {
+        const rankNum = idx + 2;
+        const analysis = generateRunnerUpAnalysis(item, top1);
+
+        return `
+          <article class="runner-card fade-in">
+            <div class="runner-top">
+              <div class="runner-portrait">
+                ${buildPortraitHTML(item.char, false)}
+              </div>
+              <div class="runner-info">
+                <span class="rank-tag">第 ${rankNum} 名・潛在心動匹配</span>
+                <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 2px;">${item.char.game}</div>
+                <div class="runner-name-row">
+                  <h4 class="runner-name">${item.char.name}</h4>
+                  <span class="runner-pct">${item.matchPercent}%</span>
+                </div>
+                <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 2px;">${item.char.title}</div>
+              </div>
+            </div>
+
+            <div class="runner-detail-block">
+              <strong>✦ 推薦原因</strong>
+              <p>${analysis.reason}</p>
+            </div>
+
+            <div class="runner-detail-block">
+              <strong>✧ 與第一名（${top1.char.name}）的差異</strong>
+              <p>${analysis.diffText}</p>
+            </div>
+
+            <div class="runner-detail-block">
+              <strong>♡ 可能發展出的戀愛互動</strong>
+              <p>${analysis.potentialDynamic}</p>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+  </script>
+</body>
+</html>
